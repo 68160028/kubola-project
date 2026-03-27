@@ -18,10 +18,15 @@ public class Boss extends GameObject {
     public void hit(){ if(hp>0) hp--; }
     public boolean isDead(){ return hp<=0; }
 
+    @Override
+    public void update(){
+        x+=speed;
+    }
+
     public void update(int w){
         x+=speed;
-        if(x<=0||x>=w-width) speed*=-1;
-    } //การเดิน
+        if (x<=0 || x>=w - width) speed*=-1;
+    }
 
     @Override
     public void draw(Graphics g){

@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class Monster extends GameObject {
+public class Monster extends GameObject implements Movable {
 
     private Image img;
     private int dir=1;
@@ -19,7 +19,7 @@ public class Monster extends GameObject {
 
     @Override
     public void update(){
-        if(!alive) return;
+        if (!alive) return;
         x+=dir*2;
         if(x<0||x>740) dir*=-1;
     }
@@ -27,5 +27,10 @@ public class Monster extends GameObject {
     @Override
     public void draw(Graphics g){
         if(alive) g.drawImage(img,x,y,width,height,null);
+    }
+
+    @Override
+    public void move() {
+        update();
     }
 }

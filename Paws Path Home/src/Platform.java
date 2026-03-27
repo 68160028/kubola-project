@@ -6,6 +6,9 @@ public class Platform extends GameObject {
     }
 
     @Override
+    public void update(){}
+
+    @Override
     public void draw(Graphics g){
         g.setColor(new Color(139,69,19));
         g.fillRect(x,y,width,height);

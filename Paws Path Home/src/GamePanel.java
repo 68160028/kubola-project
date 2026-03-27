@@ -45,6 +45,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if(e.getKeyCode()==KeyEvent.VK_A) left=true;
                 if(e.getKeyCode()==KeyEvent.VK_D) right=true;
                 if(e.getKeyCode()==KeyEvent.VK_SPACE) player.jump();
+                if(e.getKeyCode()==KeyEvent.VK_UP) player.jump(20);
 
                 if(e.getKeyCode()==KeyEvent.VK_K && canShoot && score>0){
                     bullets.add(new Bullet(player.x + player.width/2, player.y + player.height/2, player.isRight()));
@@ -112,9 +113,18 @@ public class GamePanel extends JPanel implements Runnable {
         if(left) player.setLeft(true); else player.setLeft(false);
         if(right) player.setRight(true); else player.setRight(false);
 
-        player.update();
+        //ใช้polymorphismกับmovable
+        ArrayList<Movable> movables = new ArrayList<>();
+        movables.add(player);
+        for (Monster m : monsters) movables.add(m);
+
+        for (Movable m : movables) {
+            m.move();
+        }
+
         player.keepInBounds(getWidth());
         player.checkPlatform(platforms);
+
 
         for(int i=0;i<bullets.size();i++){
             Bullet b = bullets.get(i);

@@ -22,6 +22,6 @@ public class Bullet extends GameObject {
         if(alive){
             g.setColor(Color.RED);
             g.fillRect(x,y,width,height);
-        } //โหลดกระสุน
+        }
     }
 }

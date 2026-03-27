@@ -3,7 +3,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class Player extends GameObject {
+public class Player extends GameObject implements Movable {
 
     private int dx = 0, dy = 0;
     private int gravity = 1;
@@ -25,23 +25,27 @@ public class Player extends GameObject {
     }
 
     public void setLeft(boolean b) {
-        if (b) {
-            if (x > 0) dx = -5;
-            else dx = 0;
-            right = false;
-        } else if (dx < 0) dx = 0;
+        if (b) dx = -5;
+        else if (dx < 0) dx = 0;
+        right = !b;
     }
 
     public void setRight(boolean b) {
-        if (b) {
-            dx = 5;
-            right = true;
-        } else if (dx > 0) dx = 0;
+        if (b) dx = 5;
+        else if (dx > 0) dx = 0;
+        right = b;
     }
 
     public void jump() {
         if (!jumping) {
             dy = -15;
+            jumping = true;
+        }
+    }
+
+    public void jump(int power) {
+        if (!jumping) {
+            dy = -power;
             jumping = true;
         }
     }
@@ -56,14 +60,6 @@ public class Player extends GameObject {
 
     public boolean isRight() {
         return right;
-    }
-
-    @Override
-    public void update() {
-        x += dx;
-        y += dy;
-        dy += gravity;
-        if (invincible > 0) invincible--;
     }
 
     public void checkPlatform(ArrayList<Platform> ps) {
@@ -93,4 +89,18 @@ public class Player extends GameObject {
     public void draw(Graphics g) {
         g.drawImage(right ? imgR : imgL, x, y, width, height, null);
     }
+
+    @Override
+    public void move() {
+        update();
+    }
+
+    @Override
+    public void update() {
+        x+=dx;
+        y+=dy;
+        dy+=gravity;
+        if (invincible > 0) invincible--;
+    }
+
 }

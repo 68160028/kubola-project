@@ -17,6 +17,9 @@ public class FishCoin extends GameObject {
     public void collect(){collected=true;}
 
     @Override
+    public void update() {}
+
+    @Override
     public void draw(Graphics g){
         if(!collected) g.drawImage(img,x,y,width,height,null);
     }

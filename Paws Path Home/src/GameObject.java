@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class GameObject {
+public abstract class GameObject {
     protected int x, y, width, height;
 
     public GameObject(int x, int y, int w, int h){
@@ -12,6 +12,6 @@ public class GameObject {
         return new Rectangle(x, y, width, height);
     }
 
-    public void update(){}
-    public void draw(Graphics g){}
+    public abstract void update();
+    public abstract void draw(Graphics g);
 }
