@@ -47,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
                 if(e.getKeyCode()==KeyEvent.VK_SPACE) player.jump();
                 if(e.getKeyCode()==KeyEvent.VK_UP) player.jump(20);
 
-                if(e.getKeyCode()==KeyEvent.VK_K && canShoot && score>0){
+                if(level==4 && e.getKeyCode()==KeyEvent.VK_K && canShoot && score>0){
                     bullets.add(new Bullet(player.x + player.width/2, player.y + player.height/2, player.isRight()));
                     score--;
                     canShoot=false;
