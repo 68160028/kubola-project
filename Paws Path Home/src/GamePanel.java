@@ -110,9 +110,9 @@ public class GamePanel extends JPanel implements Runnable {
     public void update(){
         if(menu || gameOver || win) return;
 
-        if(left) player.setLeft(true); else player.setLeft(false);
         if(right) player.setRight(true); else player.setRight(false);
-
+        if(left) player.setLeft(true); else player.setLeft(false);
+        
         //ใช้polymorphismกับmovable
         ArrayList<Movable> movables = new ArrayList<>();
         movables.add(player);
