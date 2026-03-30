@@ -20,7 +20,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Image bgHome,bg1,bg2,bg3,bg4,heart;
     private Rectangle startBtn = new Rectangle(300,300,200,60);
     private Rectangle retryBtn = new Rectangle(300,280,200,60);
-    private Rectangle menuBtn  = new Rectangle(300,360,200,60);
+    private Rectangle menuBtn  = new Rectangle(300,360,200,60); //สร้างปุ่ม
 
     public GamePanel(){
         setPreferredSize(new Dimension(800,600));
@@ -30,10 +30,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent e){
-                if(menu && startBtn.contains(e.getPoint())) menu=false;
+                if(menu && startBtn.contains(e.getPoint())) menu=false; //อยู่mnและกดstจะออกจากmn
                 if(gameOver || win){
-                    if(retryBtn.contains(e.getPoint())) reset();
-                    if(menuBtn.contains(e.getPoint())) { menu=true; reset(); }
+                    if(retryBtn.contains(e.getPoint())) reset(); //ถ้ากดrtรีเซ็ตเกม
+                    if(menuBtn.contains(e.getPoint())) { menu=true; reset(); } //ถ้ากดmnกลับหน้าmn + รีเซ็ตเกม
                 }
             }
         });
@@ -45,18 +45,19 @@ public class GamePanel extends JPanel implements Runnable {
                 if(e.getKeyCode()==KeyEvent.VK_A) left=true;
                 if(e.getKeyCode()==KeyEvent.VK_D) right=true;
                 if(e.getKeyCode()==KeyEvent.VK_SPACE) player.jump();
-                if(e.getKeyCode()==KeyEvent.VK_UP) player.jump(20);
+                if(e.getKeyCode()==KeyEvent.VK_UP) player.jump(20); //การเดิน + กระโดด
 
-                if(level==4 && e.getKeyCode()==KeyEvent.VK_K && canShoot && score>0){
-                    bullets.add(new Bullet(player.x + player.width/2, player.y + player.height/2, player.isRight()));
-                    score--;
+                if(level==4 && e.getKeyCode()==KeyEvent.VK_K && canShoot && score>0){ //การยิง
+                    bullets.add(new Bullet(player.x + player.width/2,
+                                           player.y + player.height/2, player.isRight())); //เซ็ตให้กระสุนออกจากกลางตัวละคร + ยิงตามทิศที่หัน
+                    score--; //ยิงแล้วลดแต้ม
                     canShoot=false;
                 }
             }
-            public void keyReleased(KeyEvent e){
+            public void keyReleased(KeyEvent e){ //ตอนปล่อยปุ่ม
                 if(e.getKeyCode()==KeyEvent.VK_A) left=false;
                 if(e.getKeyCode()==KeyEvent.VK_D) right=false;
-                if(e.getKeyCode()==KeyEvent.VK_K) canShoot=true;
+                if(e.getKeyCode()==KeyEvent.VK_K) canShoot=true; //กันยิงรัว
             }
         });
 
@@ -85,45 +86,45 @@ public class GamePanel extends JPanel implements Runnable {
         platforms.add(new Platform(250,250,120,20));
         platforms.add(new Platform(450,200,120,20));
 
-        int coinCount = 6 + (int)(Math.random()*5);
+        int coinCount = 6 + (int)(Math.random()*5); //สุ่มเหรียญ 6-10 เหรียญ
         for(int i=0;i<coinCount;i++){
             int x = 100 + (int)(Math.random()*600);
-            int y = 200 + (int)(Math.random()*250);
-            coins.add(new FishCoin(x,y));
+            int y = 200 + (int)(Math.random()*250); //วนลูปสร้างเหรียญ + สุ่มตำแหน่ง
+            coins.add(new FishCoin(x,y)); //สร้างเหรียญ
         }
 
-        if(level==2) monsters.add(new Monster(500,420));
+        if(level==2) monsters.add(new Monster(500,420)); //ใส่ศัตรู1ตัวในlv2
         if(level==3){
             monsters.add(new Monster(300,420));
             monsters.add(new Monster(500,420));
             monsters.add(new Monster(650,420));
-        }
-        if(level==4) boss = new Boss(300,350);
+        } //lv3ใส่3ตัว
+        if(level==4) boss = new Boss(300,350); //ใส่บอสในlv4
     }
 
-    private void reset(){ level=1; lives=3; score=0; gameOver=false; win=false; startLevel(); }
+    private void reset(){ level=1; lives=3; score=0; gameOver=false; win=false; startLevel(); } //ตั้งค่ารีเซ็ต
 
     public void run(){
         while(true){ update(); repaint(); try{Thread.sleep(16);}catch(Exception e){} }
-    }
+    } //อัปเดทเกม + สร้างรูปใหม่
 
     public void update(){
         if(menu || gameOver || win) return;
 
-        if(right) player.setRight(true); else player.setRight(false);
-        if(left) player.setLeft(true); else player.setLeft(false);
+        player.setRight(right);
+        player.setLeft(left); //ควบคุมการเดิน
         
         //ใช้polymorphismกับmovable
-        ArrayList<Movable> movables = new ArrayList<>();
+        ArrayList<Movable> movables = new ArrayList<>(); //Listสิ่งที่เดิน
         movables.add(player);
         for (Monster m : monsters) movables.add(m);
 
-        for (Movable m : movables) {
+        for (Movable m : movables) { //สั่งให้เดินทั้งหมดพร้อมกัน
             m.move();
         }
 
         player.keepInBounds(getWidth());
-        player.checkPlatform(platforms);
+        player.checkPlatform(platforms); //เช็คการเดิน + ยืน
 
 
         for(int i=0;i<bullets.size();i++){
