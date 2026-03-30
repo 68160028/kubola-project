@@ -11,9 +11,9 @@ public class FishCoin extends GameObject {
         super(x,y,40,40);
         URL u=getClass().getResource("/assets/fish coin.png");
         img=new ImageIcon(u).getImage();
-    }
+    } //โหลดรูป
 
-    public boolean isCollected(){return collected;}
+    public boolean isCollected(){return collected;} //สถานะการเก็บ
     public void collect(){collected=true;}
 
     @Override
@@ -21,6 +21,6 @@ public class FishCoin extends GameObject {
 
     @Override
     public void draw(Graphics g){
-        if(!collected) g.drawImage(img,x,y,width,height,null);
+        if(!collected) g.drawImage(img,x,y,width,height,null); //แสดงรูปตอนยังไม่เก็บ
     }
 }
