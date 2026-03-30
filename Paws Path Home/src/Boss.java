@@ -5,28 +5,28 @@ import java.net.URL;
 public class Boss extends GameObject {
 
     private Image img;
-    private int hp=10;
-    private int maxHP=10;
+    private int hp=10; //ค่าหัวใจจริง
+    private int maxHP=10; //ค่าหัวใจmax
     private int speed=3;
 
     public Boss(int x,int y){
         super(x,y,120,120);
         URL u=getClass().getResource("/assets/mush.png");
         img=new ImageIcon(u).getImage();
-    } //โหลดรุปboss
+    } //โหลดรูป
 
-    public void hit(){ if(hp>0) hp--; }
-    public boolean isDead(){ return hp<=0; }
+    public void hit(){ if(hp>0) hp--; } //การโจมตีลดหัวใจ
+    public boolean isDead(){ return hp<=0; } //เช็คการตายของBoss
 
     @Override
     public void update(){
         x+=speed;
-    }
+    } //อัพเดทขยับตำแหน่ง
 
     public void update(int w){
         x+=speed;
         if (x<=0 || x>=w - width) speed*=-1;
-    }
+    } //เช็คการชนขอบจอ และให้เดินวนกลับ
 
     @Override
     public void draw(Graphics g){
