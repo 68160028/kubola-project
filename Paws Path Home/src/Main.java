@@ -5,7 +5,7 @@ public class Main {
         JFrame f=new JFrame("Paws Path Home");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.add(new GamePanel());
-        f.pack();
+        f.pack(); //ปรับขนาดอัตโนมัติ
         f.setLocationRelativeTo(null);
         f.setVisible(true);
     }
