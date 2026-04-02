@@ -13,8 +13,13 @@ public class FishCoin extends GameObject {
         img=new ImageIcon(u).getImage();
     } //โหลดรูป
 
-    public boolean isCollected(){return collected;} //สถานะการเก็บ
-    public void collect(){collected=true;}
+    public boolean isCollected(){
+        return this.collected;
+    } //สถานะการเก็บ
+    
+    public void collect(){
+        this.collected=true;
+    }
 
     @Override
     public void update() {}
