@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
 
-public class Boss extends GameObject {
+public class Boss extends GameObject implements Movable {
 
     private Image img;
     private int hp=10; //ค่าหัวใจจริง
@@ -39,5 +39,10 @@ public class Boss extends GameObject {
         g.setColor(Color.RED);
         int hpW = (int)((hp/(double)maxHP)*120);
         g.fillRect(x,y-15,hpW,10);
+    }
+
+    @Override
+    public void move() {
+        update();
     }
 }
